@@ -1,5 +1,13 @@
 import 'dotenv/config'
 
-console.log('Helloooo yallll nodemmon.')
+import express from 'express'
 
-console.log(process.env.JWT_SECRET)
+const app = express()
+
+app.get('/', (req, res) => {
+    res.send('Here we go nodee uppp!');
+  })
+
+app.listen(3000, () =>
+  console.log('App is hot and listening on port 3000!'),
+)
