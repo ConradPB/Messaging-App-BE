@@ -2,9 +2,11 @@ import { Router } from "express"
 
 const router = Router()
 
-router.get('/', (req, res) => {
-    return res.send(req.context.models.users[req.context.me.id]);
-  })
+import Session from "../controllers/session"
+
+const session = new Session()
+
+router.get('/', session.getUser)
 
 
-  export default router
+export default router

@@ -1,50 +1,21 @@
-import { v4 as uuidv4 } from 'uuid'
 import { Router } from 'express'
+import Message from '../controllers/message'
 
 const router = Router()
 
+const message = new Message()
 
-router.get('/', (req, res) => {
-    return res.send(Object.values(req.context.models.messages))
- })
-  
-router.get('/:messageId', (req, res) => {
-    return res.send(req.context.models.messages[req.params.messageId])
-})
 
-router.post('/', (req, res) => {
-  const id = uuidv4();
-  const message = {
-    id,
-    text: req.body.text,
-    userId: req.context.me.id,
-   
-  };
+router.get('/', message.getMessages)
+  
+router.get('/:messageId', message.getMessage)
 
-  req.context.models.messages[id] = message;
-
-  return res.send(message);
-})
+router.post('/', message.createMessage)
   
-router.put('/:messageId', (req, res) => {
-  
-  return res.send(`PUT HTTP method on user/${req.params.userId} resource`)
-  
-})
+router.put('/:messageId', message.updateMessage)
 
   
-router.delete('/:messageId', (req, res) => {
-  const {
-    [req.params.messageId] : message,
-    ...otherMessages
-  } = req.context.models.messages
-
-  req.context.models.messages = otherMessages
-
-  return res.send(
-    message
-    )
-  })
+router.delete('/:messageId', message.deleteMessage)
 
 
   export default router

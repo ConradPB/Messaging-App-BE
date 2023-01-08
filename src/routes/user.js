@@ -1,22 +1,22 @@
 import { Router } from 'express';
+import User from '../controllers/user';
+
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  return res.send(Object.values(req.context.models.users));
-});
+const user = new User()
 
-router.get('/:userId', (req, res) => {
-  return res.send(req.context.models.users[req.params.userId]);
-})
+router.get('/', user.getUsers)
 
-router.post('/', (req, res) => {
-    return res.send('POST HTTP method on user resource')
-    })
+router.get('/:userId', user.fetchUser)
+
+
+
+
+router.post('/', user.createUser)
 
 router.put('/:userId', (req, res) => {
-        return res.send(
-          `PUT HTTP method on user/${req.params.userId} resource`,
+        return res.send(`PUT HTTP method on user/${req.params.userId} resource`,
         )
         })  
       
