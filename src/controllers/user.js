@@ -8,9 +8,7 @@ class User {
         return res.send(req.context.models.users[req.params.userId])
     }
 
-    createUser(req,res) {
-        return res.send('POST HTTP method on user resource')
-    }
+  
 }
 
 
