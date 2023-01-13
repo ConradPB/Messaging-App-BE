@@ -14,7 +14,6 @@ router.post('/', message.createMessage)
   
 router.put('/:messageId', message.updateMessage)
 
-  
 router.delete('/:messageId', message.deleteMessage)
 
 
