@@ -2,41 +2,52 @@ import { v4 as uuidv4 } from 'uuid'
 
 class Message {
 
-    getMessage(req,res) {
-        return res.send(req.context.models.messages[req.params.messageId])
+    async getMessage(req,res) {
+        const message = await req.context.models.Message.findById(req.params.messageId)
+        return res.send(message)
     }
     
-    getMessages(req,res) {
-        return res.send(Object.values(req.context.models.messages))
+    async getMessages(req,res) {
+        const messages = await req.context.models.Message.find()
+
+        return res.send(messages)
     }
 
-    createMessage(req,res) {
-        const id = uuidv4();
-        const message = {
-          id,
-          text: req.body.text,
-          userId: req.context.me.id,
-         
-        }
-      
-        req.context.models.messages[id] = message;
+   async createMessage(req,res) {
+         const id = uuidv4()
+         const message = await req.context.models.Message.create({
+            id,
+            text: req.body.text,
+            userId: req.context.me.id,
+        }) 
       
         return res.send(message)
     }
 
-    updateMessage(req,res) {
-        return res.send(`PUT HTTP method on message/${req.params.messageId} resource`)
+    async updateMessage(req,res) {
+        const id = uuidv4()
+        const message = await req.context.models.Message.findById(req.params.messageId)
+
+        if (message) {
+            await message.updateOne({
+                id,
+                text: req.body.text,
+                userId: req.context.me.id,
+               
+              })
+    }
+    
+    return res.send(message)
     }
 
-    deleteMessage(req,res) {
-        const {
-            [req.params.messageId] : message,
-            ...otherMessages
-          } = req.context.models.messages
-        
-          req.context.models.messages = otherMessages
-        
-          return res.send(
+    async deleteMessage(req,res) {
+        const message = await req.context.models.Message.findById(req.params.messageId)
+
+        if (message) {
+            await message.remove()
+    }
+    
+    return res.send(
             message
             )
     }
