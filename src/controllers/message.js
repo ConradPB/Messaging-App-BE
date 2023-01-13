@@ -13,16 +13,17 @@ class Message {
         return res.send(messages)
     }
 
-   async createMessage(req,res) {
-         const id = uuidv4()
-         const message = await req.context.models.Message.create({
-            id,
-            text: req.body.text,
-            userId: req.context.me.id,
-        }) 
-      
+   async createMessage(req,res,next) {
+                const id = uuidv4()
+                const message = await req.context.models.Message.create({
+                    id,
+                    text: req.body.text,
+                    userId: req.context.me.id,
+        }).catch(next) 
+         
         return res.send(message)
     }
+    
 
     async updateMessage(req,res) {
         const id = uuidv4()

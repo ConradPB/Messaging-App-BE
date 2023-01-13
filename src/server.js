@@ -5,7 +5,7 @@ import cors from 'cors'
 import routes from './routes'
 import models, { connectDb } from './models'
 mongoose.set('strictQuery', true)
-
+import errorHandler from './middleware/errorMiddleware'
 
 const app = express()
 
@@ -21,6 +21,8 @@ app.use(async(req, res, next) => {
 app.use('/session', routes.session)
 app.use('/users', routes.user)
 app.use('/messages', routes.message)
+app.use(errorHandler)
+
 
 // re-initializing the database on every Express server start
 
