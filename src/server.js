@@ -6,6 +6,7 @@ import routes from './routes'
 import models, { connectDb } from './models'
 mongoose.set('strictQuery', true)
 import errorHandler from './middleware/errorMiddleware'
+import User from './controllers/user'
 
 const app = express()
 
@@ -23,6 +24,14 @@ app.use('/users', routes.user)
 app.use('/messages', routes.message)
 app.use(errorHandler)
 
+app.post("/register", (req, res) => {
+  
+  });
+  
+ 
+app.post("/login", (req, res) => {
+ 
+  })
 
 // re-initializing the database on every Express server start
 
