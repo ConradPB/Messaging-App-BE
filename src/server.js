@@ -24,14 +24,6 @@ app.use('/users', routes.user)
 app.use('/messages', routes.message)
 app.use(errorHandler)
 
-app.post("/register", (req, res) => {
-  
-  });
-  
- 
-app.post("/login", (req, res) => {
- 
-  })
 
 // re-initializing the database on every Express server start
 
