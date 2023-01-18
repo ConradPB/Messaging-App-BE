@@ -14,14 +14,14 @@ class User {
 
     async registerUser(req, res) {
         try {
-            const { username, email, password } = req.body
+            const { username, email, password } = await req.body
 
             if (!(username && email && password)) {
                 res.status(400).send("All input is required")
               }
             
 
-            const oldUser = await req.context.models.User.findOne({ username, email })
+            const oldUser = req.context.models.User.findOne({ email })
 
             if (oldUser) {
                 return res.status(409).send("User Already Exists. Please Login")
