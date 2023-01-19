@@ -12,14 +12,14 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(async(req, res, next) => {
+app.use((req, res, next) => {
   req.context = {
     models,
     me: models.User,}
   next();
 })
 app.use('/session', routes.session)
-app.use('/users', routes.user)
+app.use('/user', routes.user)
 app.use('/messages', routes.message)
 app.use(errorHandler)
 

@@ -6,10 +6,12 @@ const router = Router()
 
 const user = new User()
 
-router.get('/', user.getUsers)
-router.get('/:userId', user.fetchUser)
+router.get('/', user.fetchUsers)
+  
+router.get('/:messageId', user.fetchUser)
+
 router.post('/', user.registerUser)
-router.post('/login', user.loginUser)
+
 
 
 
