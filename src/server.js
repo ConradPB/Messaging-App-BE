@@ -6,6 +6,7 @@ import routes from './routes'
 import models, { connectDb } from './models'
 mongoose.set('strictQuery', true)
 import errorHandler from './middleware/errorMiddleware'
+import User from './controllers/user'
 
 const app = express()
 
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use((req, res, next) => {
   req.context = {
     models,
-    me: models.User,}
+    }
   next();
 })
 app.use('/session', routes.session)

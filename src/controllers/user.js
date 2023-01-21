@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken'
 
 class User {
 
+
     async fetchUser(req,res) {
-      const user = await req.context.models.User.findById(req.params.messageId)
+      const user = await req.context.models.User.findById(req.params.UserId)
       return res.send(user)
 }
 
@@ -57,9 +58,43 @@ class User {
 
     }
 
+    async loginUser(req, res) {
+      try {
+        const { email, password } = req.body
+
+        if (!(email && password)) {
+          res.status(400).send("All input is required")
+        }
+
+        const user = await req.context.models.User.findOne({ email })
+
+        if (user && (await bcrypt.compare(password, user.password))) {
+
+          const token = jwt.sign(
+            { user_id: user._id, email },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: "20d",
+            }
+          )
+          user.token = token
+
+          res.status(200).json(user)
+        } else {
+
+        res.status(400).send("Invalid Credentials")
+      }
+
+
+      } catch (error) {
+        console.log(error)
+      }
+       
+  }
+
+
    
   
 }
-
 
 export default User

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { isValidObjectId } from 'mongoose'
 
 const userSchema = new mongoose.Schema(
   {
