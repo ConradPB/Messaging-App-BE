@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-
 class User {
 
 
@@ -21,14 +20,14 @@ class User {
             const { username, email, password } = await req.body
 
             if (!(username && email && password)) {
-                res.status(400).send("All input is required")
+                res.status(400).send('All input is required')
               }
             
 
             const oldUser = await req.context.models.User.findOne({ email })
 
             if (oldUser) {
-                return res.status(409).send("User Already Exists. Please Login")
+                return res.status(409).send('User Already Exists. Please Login')
               }
 
             const encryptedPassword = await bcrypt.hash(password, 10)
@@ -63,7 +62,7 @@ class User {
         const { email, password } = req.body
 
         if (!(email && password)) {
-          res.status(400).send("All input is required")
+          res.status(400).send('All input is required')
         }
 
         const user = await req.context.models.User.findOne({ email })
@@ -74,7 +73,7 @@ class User {
             { user_id: user._id, email },
             process.env.JWT_SECRET,
             {
-              expiresIn: "20d",
+              expiresIn: '20d',
             }
           )
           user.token = token
@@ -82,7 +81,7 @@ class User {
           res.status(200).json(user)
         } else {
 
-        res.status(400).send("Invalid Credentials")
+        res.status(400).send('Invalid Credentials')
       }
 
 
@@ -91,9 +90,13 @@ class User {
       }
        
   }
+    async welcomeUser (req,res) {
+      res.status(200).send('Welcome 🙌 ')                                                                                                               
+
+    }
 
 
-   
+  
   
 }
 
