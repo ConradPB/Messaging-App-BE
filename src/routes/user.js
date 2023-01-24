@@ -1,5 +1,6 @@
-import { Router } from 'express';
-import User from '../controllers/user';
+import { Router } from 'express'
+import User from '../controllers/user'
+import verifyToken from '../middleware/auth'
 
 const router = Router()
 
@@ -12,6 +13,8 @@ router.get('/:userId', user.fetchUsers)
 router.post('/', user.registerUser)
 
 router.post('/login', user.loginUser)
+
+router.post('/welcome', verifyToken, user.welcomeUser)
 
 
 
